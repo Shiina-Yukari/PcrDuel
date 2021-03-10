@@ -432,6 +432,7 @@ cloverlist = range(7300,7307)
 majsoullist = range(7400,7476)
 noranekolist = range(7500,7510)
 fgolist = range(8001,8301)
+tenkalist = range(9001,9231)
 
 
 #这里记录dlc名字和对应列表
@@ -451,7 +452,8 @@ dlcdict = {
         'cloverdays':cloverlist,
         'majsoul':majsoullist,
         'noraneko':noranekolist,
-        'fgo':fgolist
+        'fgo':fgolist,
+        'tenka':tenkalist
         }
 
 
@@ -472,7 +474,8 @@ dlcintro = {
         'cloverdays':'Clover Days角色包',
         'majsoul':'雀魂角色包',
         'noraneko':'ノラと皇女と野良猫ハート角色包' ,
-        'fgo':'FGO手游角色包'        
+        'fgo':'FGO手游角色包',
+        'tenka':'天华百剑角色包'
         
         }
 
@@ -795,7 +798,7 @@ class ScoreCounter2:
                            PRIMARY KEY(GID, UID));''')
         except:
             raise Exception('创建表发生错误')
-            
+
     def _add_score(self, gid, uid, score):
         try:
             current_score = self._get_score(gid, uid)
@@ -3376,10 +3379,10 @@ async def add_score(bot, ev: CQEvent):
         gid = ev.group_id
         uid = ev.user_id
         guid = gid,uid
-        if daily_ZERO_limiter.checks(guid) == ZERO_GET_LIMIT:
-            msg = f'超出领取金币每日限制次数！每日限{ZERO_GET_LIMIT}次！'
-            await bot.send(ev, msg, at_sender=True)
-            return
+        # if daily_ZERO_limiter.checks(guid) == ZERO_GET_LIMIT:
+        #     msg = f'超出领取金币每日限制次数！每日限{ZERO_GET_LIMIT}次！'
+        #     await bot.send(ev, msg, at_sender=True)
+        #     return
         current_score = score_counter._get_score(gid, uid)
         if current_score == 0:
             score_counter._add_score(gid, uid, ZERO_GET_AMOUNT)
